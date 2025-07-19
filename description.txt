@@ -13,5 +13,13 @@
 
     -> pip install -r requirements.txt
 
+#### Min requirement for this project ####
+1. LLM Model(GROQ[freely],openai[paid],gemini[15days free access], claude[paid], huggingface[freely], Ollama[local setup])
+2. Embedding Model (openai, huggingface, gemini)
+3. vectordatabase
+    -> 3variants of database
+        a. inmemory database
+        b. ondisk database
+        c. cloudbase database
 
-    
+
