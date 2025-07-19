@@ -21,5 +21,9 @@
         a. inmemory database
         b. ondisk database
         c. cloudbase database
+4. pip list
+5. pip install -e .
+6. pip list
+    -> we can see the document_portal_analysis_with_adv_RAG as package under env which is virtual environment
 
 
