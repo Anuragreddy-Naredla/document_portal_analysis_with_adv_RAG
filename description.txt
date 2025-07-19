@@ -21,9 +21,26 @@
         a. inmemory database
         b. ondisk database
         c. cloudbase database
-4. pip list
-5. pip install -e .
-6. pip list
+
+### COMMANDS ###
+1. pip list
+2. pip install -e .
+    -> It will create the document_portal_analysis_with_adv_RAG as the package and also we can publish to pypi 
+3. pip list
     -> we can see the document_portal_analysis_with_adv_RAG as package under env which is virtual environment
+4. pip install -r requirements.txt
+    -> To Install all the libraries.
+
+### API KEYS ###
+1. Groq api key.
+    -> Go to the groq website https://console.groq.com/keys
+    -> Go to API keys tab
+    -> Click on Create API Key and copy and paste and give in the .env file
+        (GROQ_API_KEY="GIVE YOUR API KEY HERE")
+        
+2. Google API KEY
+    -> Go to the google ai studio website and create the api key. https://aistudio.google.com/prompts/new_chat
+    -> click on Create API key and copy and paste under the .env file as 
+        (GOOGLE_API_KEY="GIVE YOUR API KEY HERE")
 
 
