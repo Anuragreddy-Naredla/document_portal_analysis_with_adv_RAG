@@ -1,8 +1,17 @@
 1. create virtual environment.
+
     -> conda create -p env python=3.10 -y
     -> conda activate env
     -> To check type "pip list"
 
-2.
+2. Create the github and commit the files.
+
     -> git init
     -> give commit and click on Publish Branch
+
+3. To install the requirements.
+
+    -> pip install -r requirements.txt
+
+
+    
