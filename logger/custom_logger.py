@@ -4,6 +4,9 @@ from datetime import datetime
 import logging
 
 class CustomLogger:
+    """
+    This class will be useful to track the all execution changes.
+    """
 
     def __init__(self,log_dir="logs"):
         self.logs_dir=os.path.join(os.getcwd(),log_dir)
