@@ -1,2 +1,8 @@
 env
 .env
+document_portal_analysis_with_adv_RAG.egg-info
+env/
+__pycache__/
+logs/
+*.pyc
+test.py
