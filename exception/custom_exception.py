@@ -16,11 +16,11 @@ class DocumentPortalException(Exception):
         Message: {self.error_msg}
         Traceback:{self.traceback_str}"""
 
-if __name__=="__main__":
-    try:
-        a=1/0
-        print(a)
-    except Exception as e:
-        app_exe=DocumentPortalException(e,sys)
-        logger.error(app_exe)
-        raise app_exe
+# if __name__=="__main__":
+#     try:
+#         a=1/0
+#         print(a)
+#     except Exception as e:
+#         app_exe=DocumentPortalException(e,sys)
+#         logger.error(app_exe)
+#         raise app_exe
