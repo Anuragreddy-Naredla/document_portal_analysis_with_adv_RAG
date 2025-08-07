@@ -52,27 +52,27 @@ class DocumentHandler:
             self.log.error(f"Error While reading the PDF: {e}")
             raise DocumentPortalException("Error While reading the PDF", e) from e
 
-if __name__=="__main__":
-    from pathlib import Path
-    from io import BytesIO
-    # pdf_path=r"D:\\d_data\\AnuragReddy_Naredla_python_data\\python\\data_science_concepts_github\\LLMOPS\\project1\\document_portal_analysis_with_adv_RAG\\data\\document_analysis\\NIPS-2017-attention-is-all-you-need-Paper.pdf"
-    pdf_path=r"D:\\d_data\\AnuragReddy_Naredla_python_data\\python\\data_science_concepts_github\\LLMOPS\\project1\\document_portal_analysis_with_adv_RAG\\data\\document_analysis\\sample.pdf"
+# if __name__=="__main__":
+#     from pathlib import Path
+#     from io import BytesIO
+#     # pdf_path=r"D:\\d_data\\AnuragReddy_Naredla_python_data\\python\\data_science_concepts_github\\LLMOPS\\project1\\document_portal_analysis_with_adv_RAG\\data\\document_analysis\\NIPS-2017-attention-is-all-you-need-Paper.pdf"
+#     pdf_path=r"D:\\d_data\\AnuragReddy_Naredla_python_data\\python\\data_science_concepts_github\\LLMOPS\\project1\\document_portal_analysis_with_adv_RAG\\data\\document_analysis\\sample.pdf"
     
-    class DummyFile:
-        def __init__(self,file_path):
-            self.name=Path(file_path).name
-            self._file_path=file_path
-        def getbuffer(self):
-            return open(self._file_path,"rb").read()
+#     class DummyFile:
+#         def __init__(self,file_path):
+#             self.name=Path(file_path).name
+#             self._file_path=file_path
+#         def getbuffer(self):
+#             return open(self._file_path,"rb").read()
         
-    dummy_pdf=DummyFile(pdf_path)
-    # handler=DocumentHandler(session_id="test_session")
-    handler=DocumentHandler()
-    try:
-        saved_path=handler.save_pdf(dummy_pdf)
-        # print(saved_path)
-        content=handler.read_pdf(saved_path)
-        print("context::=")
-        print(content[:500])
-    except Exception as e:
-        print(f"Error:{e}")
+#     dummy_pdf=DummyFile(pdf_path)
+#     # handler=DocumentHandler(session_id="test_session")
+#     handler=DocumentHandler()
+#     try:
+#         saved_path=handler.save_pdf(dummy_pdf)
+#         # print(saved_path)
+#         content=handler.read_pdf(saved_path)
+#         print("context::=")
+#         print(content[:500])
+#     except Exception as e:
+#         print(f"Error:{e}")

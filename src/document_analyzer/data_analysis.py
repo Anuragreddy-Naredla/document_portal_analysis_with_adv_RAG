@@ -3,8 +3,8 @@ import sys
 from utils.model_loader import ModelLoader
 from logger.custom_logger import CustomLogger
 from exception.custom_exception import DocumentPortalException
-from prompt.prompt_library import *
-from model.models import *
+from prompt.prompt_library import PROMPT_REGISTRY
+from model.models import MetaData
 
 from langchain_core.output_parsers import JsonOutputParser
 from langchain.output_parsers import OutputFixingParser
@@ -28,7 +28,23 @@ class DocumentAnalyzer:
             self.log.error(f"Error initializing DocumentAnalyzer:{e}")
             raise DocumentPortalException("Error in DocumentAnalyzer Initialization", sys)
 
-    def analyze_document(self):
-        pass
+    def analyze_document(self, document_text:str):
+        try:
+            chain = self.prompt | self.llm | self.fixing_parser
+            
+            self.log.info("Meta-data analysis chain initialized")
+
+            response = chain.invoke({
+                "format_instructions": self.parser.get_format_instructions(),
+                "document_text": document_text
+            })
+
+            self.log.info("Metadata extraction successful", keys=list(response.keys()))
+            
+            return response
+
+        except Exception as e:
+            self.log.error("Metadata analysis failed", error=str(e))
+            raise DocumentPortalException("Metadata extraction failed",sys)
     
-da=DocumentAnalyzer()
+# da=DocumentAnalyzer()

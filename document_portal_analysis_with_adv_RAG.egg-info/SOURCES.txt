@@ -8,6 +8,8 @@ exception/__init__.py
 exception/custom_exception.py
 logger/__init__.py
 logger/custom_logger.py
+model/__init__.py
+model/models.py
 prompt/__init__.py
 prompt/prompt_library.py
 src/__init__.py
@@ -16,7 +18,7 @@ src/document_analyzer/data_analysis.py
 src/document_analyzer/data_ingestion.py
 src/document_compare/__init__.py
 src/document_compare/data_ingestion.py
-src/document_compare/retrieval.py
+src/document_compare/document_comparision.py
 src/multi_document_chat/__init__.py
 src/multi_document_chat/contextual_compression.py
 src/multi_document_chat/data_ingestion.py
