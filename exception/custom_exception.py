@@ -1,7 +1,5 @@
 import traceback
 import sys
-from logger.custom_logger import CustomLogger
-logger=CustomLogger().get_logger(__file__)
 class DocumentPortalException(Exception):
     def __init__(self,error_msg:str,error_details:sys):
         _,_,exec_tb=error_details.exc_info()# we can capure all system info
