@@ -3,78 +3,67 @@ from pathlib import Path
 import fitz
 import uuid
 from datetime import datetime, timezone
-
 from logger.custom_logger import CustomLogger
 from exception.custom_exception import DocumentPortalException
 
 class DocumentIngestion:
 
-    def __init__(self,base_dir="data\\document_compare",session_id=None):
-        self.log=CustomLogger().get_logger(__name__)
-        self.base_dir=Path(base_dir)
-        self.base_dir.mkdir(parents=True,exist_ok=True)
+    def __init__(self, base_dir: str = "data\\document_compare",session_id=None):
+        self.log = CustomLogger().get_logger(__name__)
+        self.base_dir = Path(base_dir)
         self.session_id = session_id or f"session_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         self.session_path = self.base_dir / self.session_id
         self.session_path.mkdir(parents=True, exist_ok=True)
-    
-    def delete_existing_file(self):
+
+        self.log.info("DocumentComparator initialized", session_path=str(self.session_path))
+
+    def save_uploaded_files(self, reference_file, actual_file):
+        """
+        Save reference and actual PDF files in the session directory.
+        """
         try:
-            if self.base_dir.exists() and self.base_dir.is_dir():
-                for file in self.base_dir.iterdir():
-                    if file.is_file():
-                        file.unlink()#for deleting the file
-                        self.log.info("File deleted",path=str(file))
-                self.log.info("Directory Cleaned",directory=str(self.base_dir))
-        except Exception as e:
-            self.log.error(f"Error deleting the existing files:{e}")
-            raise DocumentPortalException("An error occured while deleting existing documents:", sys)
+            ref_path = self.session_path / reference_file.name
+            act_path = self.session_path / actual_file.name
 
+            if not reference_file.name.lower().endswith(".pdf") or not actual_file.name.lower().endswith(".pdf"):
+                raise ValueError("Only PDF files are allowed.")
 
-    def save_uploaded_files(self,ref_file,actual_file):
-        try:
-            self.delete_existing_file()
-            self.log.info("Existing file deleted successfully")
-            ref_path=self.base_dir/ref_file.name
-            actual_path=self.base_dir/actual_file.name
-
-            #ref_file: which means it's a V1(changes made file)
-            #actual_file: which means V2
-            print("ref_file.name", ref_file.name)
-            print("actual_file.name", actual_file.name)
-
-            if not ref_file.name.endswith(".pdf") or not actual_file.name.endswith(".pdf"):
-                raise ValueError("Only PDF files allowed.")
             with open(ref_path, "wb") as f:
-                f.write(ref_file.getbuffer())
+                f.write(reference_file.getbuffer())
 
-            with open(actual_path, "wb") as f:
+            with open(act_path, "wb") as f:
                 f.write(actual_file.getbuffer())
 
-            self.log.info("Files saved", reference=str(ref_path), actual=str(actual_path), session=self.session_id)
-            return ref_path, actual_file
+            self.log.info("Files saved", reference=str(ref_path), actual=str(act_path), session=self.session_id)
+            return ref_path, act_path
+
         except Exception as e:
-            self.log.error(f"Error saved uploading files:{e}")
-            raise DocumentPortalException("An error occured while saving and loading the documents:", sys)
+            self.log.error("Error saving PDF files", error=str(e), session=self.session_id)
+            raise DocumentPortalException("Error saving files", sys)
 
-
-    def read_pdf(self,pdf_path):
+    def read_pdf(self, pdf_path: Path) -> str:
+        """
+        Read text content of a PDF page-by-page.
+        """
         try:
             with fitz.open(pdf_path) as doc:
                 if doc.is_encrypted:
-                    raise ValueError("PDF is encrypted: {pdf_path.name}")
-                all_text=[]
+                    raise ValueError(f"PDF is encrypted: {pdf_path.name}")
+
+                all_text = []
                 for page_num in range(doc.page_count):
-                    page=doc.load_page(page_num)
-                    text=page.get_text()
+                    page = doc.load_page(page_num)
+                    text = page.get_text()  # type: ignore
                     if text.strip():
-                        all_text.append(f"\n --- Page {page_num+1} --- \n{text}")
-                self.log.info("PDF read successfully",file=str(pdf_path), pages=len(all_text))
-                return "\n".join(all_text)
+                        all_text.append(f"\n --- Page {page_num + 1} --- \n{text}")
+
+            self.log.info("PDF read successfully", file=str(pdf_path), pages=len(all_text))
+            return "\n".join(all_text)
 
         except Exception as e:
-            self.log.error(f"Error while reading the PDF:{e}")
-            raise DocumentPortalException("An error occured while reading the PDF:",sys)
-        
+            self.log.error("Error reading PDF", file=str(pdf_path), error=str(e))
+            raise DocumentPortalException("Error reading PDF", sys)
+
     def combine_documents(self) -> str:
         """
         Combine content of all PDFs in session folder into a single string.
@@ -112,4 +101,3 @@ class DocumentIngestion:
         except Exception as e:
             self.log.error("Error cleaning old sessions", error=str(e))
             raise DocumentPortalException("Error cleaning old sessions", sys)
-        
