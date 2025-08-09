@@ -7,7 +7,7 @@ from prompt.prompt_library import PROMPT_REGISTRY
 from model.models import MetaData
 
 from langchain_core.output_parsers import JsonOutputParser
-from langchain.output_parsers import OutputFixingParser
+from langchain.output_parsers import OutputFixingParser # type: ignore
 
 
 class DocumentAnalyzer:
