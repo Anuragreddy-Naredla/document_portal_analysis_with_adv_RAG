@@ -16,7 +16,7 @@ class SingleDocIngestion:
         try:
             self.log=CustomLogger().get_logger(__name__)
 
-            self.data_dir=data_dir
+            self.data_dir=Path(data_dir)
             self.data_dir.mkdir(parents=True,exist_ok=True)
 
             self.faiss_dir=Path(faiss_dir)
@@ -48,7 +48,7 @@ class SingleDocIngestion:
     def _create_retrieval(self,documents):
         try:
             splitter=RecursiveCharacterTextSplitter(chunk_size=1000,chunk_overlap=300)
-            chunks=splitter.split_documents(splitter)
+            chunks=splitter.split_documents(documents)
             self.log.info(f"Documents splitted into chunks={len(chunks)}")
 
             embeddings=self.model_loader.load_embeddings()
