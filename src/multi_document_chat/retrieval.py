@@ -21,6 +21,7 @@ class ConversationalRag:
         self.log=CustomLogger().get_logger(__name__)
         self.session_id=session_id
         try:
+            self.llm=ModelLoader().load_llm()
             self.contextualize_prompt=PROMPT_REGISTRY[PromptType.CONTEXTUALIZE_QUESTION.value]
             self.qa_prompt=PROMPT_REGISTRY[PromptType.CONTEXT_QA.value]
 
@@ -42,7 +43,6 @@ class ConversationalRag:
             vectorstore=FAISS.load_local(index_path,embeddings,allow_dangerous_deserialization=True)
             self.retriever=vectorstore.as_retriever(search_type="similarity",search_kwargs={"k":5})
             self.log.info("FAISS retriever loaded successfully",index_path=index_path,session_id=self.session_id)
-            self._build_lcel_chain()
             return self.retriever
 
 
@@ -50,7 +50,7 @@ class ConversationalRag:
             self.log.error("Failed to load retriever from faiss database",error=str(e))
             raise DocumentPortalException("Error in load_retriever_from_faiss function",sys)
 
-    def invoke(self,user_input,chat_history:Optional[List[BaseMessage]]):
+    def invoke(self,user_input,chat_history:Optional[List[BaseMessage]]=None):
         try:
             chat_history = chat_history or []
             payload={"input":user_input,"chat_history":chat_history}

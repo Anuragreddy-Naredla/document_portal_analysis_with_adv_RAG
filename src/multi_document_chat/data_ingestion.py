@@ -3,10 +3,9 @@ import uuid
 from pathlib import Path
 from datetime import datetime,timezone
 
-from langchain_community.document_loaders import PyPDFLoader,Doc2txtLoader,TextLoader
+from langchain_community.document_loaders import PyPDFLoader,TextLoader,Docx2txtLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorestores import FAISS
-
+from langchain_community.vectorstores import FAISS
 
 from utils.model_loader import ModelLoader
 from exception.custom_exception import DocumentPortalException
@@ -14,7 +13,7 @@ from logger.custom_logger import CustomLogger
 class DocumentIngestor:
 
     SUPPORTED_EXTENSIONS={".pdf",".docs",".txt",".md"}
-    def __init__(self,temp_dir:str="data/multi_document_chat/",faiss_index:str="faisss_index", session_id:str|None=None):
+    def __init__(self,temp_dir:str="data/multi_doc_chat/",faiss_index:str="faisss_index", session_id:str|None=None):
         self.log=CustomLogger().get_logger(__name__)
         try:
             self.temp_dir=Path(temp_dir)
@@ -44,7 +43,7 @@ class DocumentIngestor:
                 if ext not in self.SUPPORTED_EXTENSIONS:
                     self.log.warning("Unsupported file skipped",filename=uploaded_file.name)
                     continue
-                unique_filename=f"{uuid.uuid4().hex[:8]{ext}}"
+                unique_filename=f"{uuid.uuid4().hex[:8]}{ext}"
                 temp_path=self.session_temp_dir/unique_filename
 
                 with open(temp_path,"wb") as f:
@@ -54,7 +53,7 @@ class DocumentIngestor:
                 if ext==".pdf":
                     loader=PyPDFLoader(str(temp_path))
                 elif ext==".docx":
-                    loader=Doc2txtLoader(str(temp_path))
+                    loader=Docx2txtLoader(str(temp_path))
                 elif ext==".txt":
                     loader=TextLoader(str(temp_path),encoding="utf-8")
                 else:
@@ -66,7 +65,7 @@ class DocumentIngestor:
                     raise DocumentPortalException("No valid documents loaded", sys)
                 
                 self.log.info("All documents loaded",total_docs=len(documents),session_id=self.session_id)
-                return self._create_retriever(documents)
+            return self._create_retriever(documents)
 
         except Exception as e:
             self.log.error(f"Error initialized in ingest_files function in multidoc module: {e}")
