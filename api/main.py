@@ -11,13 +11,10 @@ from typing import Dict,Any,List,Optional
 from src.document_ingestion.data_ingestion import (DocHandler,
                                                    DocCompare,
                                                    ChatIngestor,
-                                                   FaissManager)
+                                                   )
 from src.document_analyzer.data_analysis import DocumentAnalyzer
 from src.document_compare.document_comparision import DocumentComparatorLLM
 from src.document_chat.retrieval import ConversationalRag
-
-from langchain_community.vectorstores import FAISS
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 FAISS_BASE = os.getenv("FAISS_BASE", "faiss_index")
 UPLOAD_BASE = os.getenv("UPLOAD_BASE", "data")
@@ -53,7 +50,11 @@ class FastAPIFileAdapter:
         return self._uf.file.read()
     
 def _read_pdf_via_handler(handler:DocHandler, path:str):
-    pass
+    if hasattr(handler, "read_pdf"):
+        return handler.read_pdf(path)
+    if hasattr(handler, "read_"):
+        return handler.read_(path)
+    raise RuntimeError("DocHandler has neither read_pdf nor read_ method.")
 
 @app.post("/analyze")
 async def analyze_document(file:UploadFile=File(...)) -> Any:
