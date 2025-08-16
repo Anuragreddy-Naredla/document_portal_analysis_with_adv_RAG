@@ -5,5 +5,4 @@ env/
 __pycache__/
 logs/
 *.pyc
-test.py
-data
+data/
