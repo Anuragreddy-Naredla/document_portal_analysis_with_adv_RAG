@@ -14,7 +14,7 @@ from src.document_ingestion.data_ingestion import (DocHandler,
                                                    )
 from src.document_analyzer.data_analysis import DocumentAnalyzer
 from src.document_compare.document_comparision import DocumentComparatorLLM
-from src.document_chat.retrieval import ConversationalRag
+from src.document_chat.retrieval import ConversationalRAG
 
 FAISS_BASE = os.getenv("FAISS_BASE", "faiss_index")
 UPLOAD_BASE = os.getenv("UPLOAD_BASE", "data")
@@ -133,7 +133,7 @@ async def chat_query(question: str = Form(...),
         if not os.path.isdir(index_dir):
             raise HTTPException(status_code=404, detail=f"FAISS index not found at: {index_dir}")
 
-        rag = ConversationalRag(session_id=session_id)
+        rag = ConversationalRAG(session_id=session_id)
         rag.load_retriever_from_faiss(index_dir, k=k, index_name=FAISS_INDEX_NAME)  # build retriever + chain
         response = rag.invoke(question, chat_history=[])
 
