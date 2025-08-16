@@ -43,4 +43,9 @@
     -> click on Create API key and copy and paste under the .env file as 
         (GOOGLE_API_KEY="GIVE YOUR API KEY HERE")
 
-
+TO TEST THE UI FROM VSCODE:
+1. Download "live server" extension from vscode.
+2. Right click on "index.html" click on "Open with Live Server".
+#WITH COMMAND
+1. cd api/
+2. uvicorn main:app --reload
