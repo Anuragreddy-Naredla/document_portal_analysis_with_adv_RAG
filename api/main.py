@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from fastapi import FastAPI,UploadFile,File,Form,HTTPException,Request
 from fastapi.responses import JSONResponse,HTMLResponse
@@ -15,11 +16,19 @@ from src.document_ingestion.data_ingestion import (DocHandler,
 from src.document_analyzer.data_analysis import DocumentAnalyzer
 from src.document_compare.document_comparision import DocumentComparatorLLM
 from src.document_chat.retrieval import ConversationalRAG
+from logger import GLOBAL_LOGGER as log
 
 FAISS_BASE = os.getenv("FAISS_BASE", "faiss_index")
 UPLOAD_BASE = os.getenv("UPLOAD_BASE", "data")
 FAISS_INDEX_NAME = os.getenv("FAISS_INDEX_NAME", "index")
+
 app=FastAPI(title="Document Portal API",version="0.1")
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,13 +38,13 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-#serve static and templates
-app.mount("/static",StaticFiles(directory="../static"),name="static")
-templates=Jinja2Templates(directory="../templates")
 
-@app.get("/",response_class=HTMLResponse)
-async def serve_ui(request:Request):
-    return templates.TemplateResponse("index.html",{"request":request})
+@app.get("/", response_class=HTMLResponse)
+async def serve_ui(request: Request):
+    log.info("Serving UI homepage.")
+    resp = templates.TemplateResponse("index.html", {"request": request})
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
 
 @app.get("/health")#To check my api is working or not
 def health() -> Dict[str,str]:
