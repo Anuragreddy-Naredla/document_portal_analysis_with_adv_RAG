@@ -46,6 +46,22 @@
 TO TEST THE UI FROM VSCODE:
 1. Download "live server" extension from vscode.
 2. Right click on "index.html" click on "Open with Live Server".
+
+
+
 #WITH COMMAND
+1. set LLM_PROVIDER=google
 1. cd api/
-2. uvicorn main:app --reload
+2. uvicorn main:app --reload 
+3. uvicorn api.main:app --port 8083 --reload[If we want to run from ROOT folder we can use this command,
+                                            api->folder name, main->python filename,app->fastapi]
+        (OR)
+   uvicorn api.main:app --host 0.0.0.0 --port 8080 --reload
+
+
+
+# FOR CREATING ANOTHER BRANCH AND SWITCH #####
+    -> In master branch only we will deploy this app'n
+1. git checkout -b dev (We will create a dev branch with this command)
+2. git switch dev
+3. git  switch master
