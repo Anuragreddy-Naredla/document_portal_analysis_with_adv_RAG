@@ -16,6 +16,7 @@ from src.document_ingestion.data_ingestion import (DocHandler,
 from src.document_analyzer.data_analysis import DocumentAnalyzer
 from src.document_compare.document_comparision import DocumentComparatorLLM
 from src.document_chat.retrieval import ConversationalRAG
+from utils.document_ops import FastAPIFileAdapter,read_pdf_via_handler
 
 FAISS_BASE = os.getenv("FAISS_BASE", "faiss_index")
 UPLOAD_BASE = os.getenv("UPLOAD_BASE", "data")
@@ -43,27 +44,14 @@ async def serve_ui(request: Request):
 def health() -> Dict[str,str]:
     return {"status":"ok","service":"document-portal"}
 
-class FastAPIFileAdapter:
-    def __init__(self,uf:UploadFile):
-        self._uf=uf
-        self.name=uf.filename
-    def getbuffer(self) -> bytes:
-        self._uf.file.seek(0)
-        return self._uf.file.read()
-    
-def _read_pdf_via_handler(handler:DocHandler, path:str):
-    if hasattr(handler, "read_pdf"):
-        return handler.read_pdf(path)
-    if hasattr(handler, "read_"):
-        return handler.read_(path)
-    raise RuntimeError("DocHandler has neither read_pdf nor read_ method.")
 
 @app.post("/analyze")
 async def analyze_document(file:UploadFile=File(...)) -> Any:
     try:
         doc_handler=DocHandler()
+        #save the pdf in the current dir in the form of session
         saved_path=doc_handler.save_pdf(FastAPIFileAdapter(file))
-        text=_read_pdf_via_handler(doc_handler,saved_path)
+        text=read_pdf_via_handler(doc_handler,saved_path)
 
         doc_analyzer=DocumentAnalyzer()
         result=doc_analyzer.analyze_document(text)
