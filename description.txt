@@ -154,6 +154,7 @@ TO TEST THE UI FROM VSCODE:
 8. After executing also you can't see this role goto "Users"->click on created user=>under "Add permissions"=>Click on "create incline policy"
     -> Goto JSON tab then write the text which was mentioned in incline_policy.json
     -> Give the name then click on Next then click on "Create Policy"
+9. ADD the security groups from EC2.
 
 ################################################
 ##########ACCESSING THE APPLICATION ############
