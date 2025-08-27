@@ -148,8 +148,14 @@ TO TEST THE UI FROM VSCODE:
     -> click on "Next"
     -> give "name" then click on Next again click on Next
     -> Finally click on "store"
-################################################
 
+################################################
+##########ACCESSING THE APPLICATION ############
+1. go to services of ECS in Clusters.
+2. got to tasks then click on recent task.
+3. under the "configuration" go to "Public IP"
+4. click on "Open address" then write the port as 8080
+    -> 3.104.78.140:8080
 
 
 
