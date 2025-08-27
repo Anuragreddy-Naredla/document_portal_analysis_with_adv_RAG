@@ -148,6 +148,12 @@ TO TEST THE UI FROM VSCODE:
     -> click on "Next"
     -> give "name" then click on Next again click on Next
     -> Finally click on "store"
+5. Exectue the Application atleast once to see the "ecsTaskExecutionRole" in "IAM users".
+6. Goto the "IAM" then goto the "Roles"
+7. Goto the "ecsTaskExecutionRole" for adding the incline policies which is adding our own custom policies.
+8. After executing also you can't see this role goto "Users"->click on created user=>under "Add permissions"=>Click on "create incline policy"
+    -> Goto JSON tab then write the text which was mentioned in incline_policy.json
+    -> Give the name then click on Next then click on "Create Policy"
 
 ################################################
 ##########ACCESSING THE APPLICATION ############
