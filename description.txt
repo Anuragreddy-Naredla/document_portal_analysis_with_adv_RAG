@@ -85,6 +85,54 @@ TO TEST THE UI FROM VSCODE:
     -> http://localhost:8093/
 
 
+##### CONFIGURE THE BELOW SERVICES IN AWS #####
+
+1. Configure "ECR"
+    -> search for ECR and click on Elastic container Registry.
+    -> Region should be "ap-southeast-2" under "sydney" which displayed on top right of ECR.[we can select any Region]
+    -> click on "Create Repository".
+    -> Give the name[documentportalsystem] which you have written in "aws.yaml" file under "ECR_REPOSITORY"
+    -> open the "Image scanning settings - deprecated" then enable the "Scan on push".
+    -> Finaly click on "create" button.
+    -> copy the "Name" and "URI" and paste somewhere.
+2. Configure "IAM USER"
+    -> search for "IAM" then click on that service.
+    -> select the "User" which is displayed on leftside under "Access Management"
+    -> click on "User"
+    -> click on "Create user"
+    -> Give the User name.
+    -> Then click on "Next".
+    -> click on "Attach Policies directly".
+    -> search the "AmazonEC2ContainerRegistryFullAccess" then click on checkbox
+    -> search the "AmazonECS_FullAccess" then click on checkbox
+    -> search the "AmazonS3FullAccess" then click on checkbox
+    -> search the "SecretsManagerReadWrite" then click on checkbox.
+    -> search the "CloudWatchLogsFullAccess" then click on checkbox
+    -> click on "Next" then click on "Create user".
+    -> After creating click on name then click on "Security credentials"
+    -> copy the "ARN" under "Summary" which displayed on top left.
+    -> Goto the "Security credentials" click on "Create access key" under "Access Keys". 
+    -> select the "Command Line Interface(CLI)" then click on confirmation checkbox then click on "Next".
+    -> Click on "Create access key" then copy the "Access key" and "Secret access key" or download the CSV file.
+    -> To make the connection between Github and AWS we require these access keys.
+    -> Finally click on "Done"
+    -> After generating all the above credentials add these credentials to github to make the connection these secrets will be read in
+       github workflows in aws.yaml file.
+        -> open the Github click on "Settings"
+        -> click on "Secrets and variables" then click on "Actions"
+        -> click on "New repository secret".
+        -> Give the name and secret access keys.
+            a. Give this name "AWS_ACCESS_KEY_ID" and "GIVE THE access_key value" which is displayed on .json file which you have downloaded 
+               above then click on "Add secret"
+            b. Give this name "AWS_SECRET_ACCESS_KEY" and "GIVE THE SECRET ACCESS KEY value" which is displayed on .json file which you have 
+               downloaded above then click on "Add secret"
+
+3. Configure "ECS"
+4. Configure "AWS SECRET MANAGER"
+################################################
+
+
+
 
 ##### Steps for running the App over the ECS:#####
 
