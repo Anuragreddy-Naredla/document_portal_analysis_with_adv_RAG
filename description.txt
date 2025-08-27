@@ -126,9 +126,28 @@ TO TEST THE UI FROM VSCODE:
                above then click on "Add secret"
             b. Give this name "AWS_SECRET_ACCESS_KEY" and "GIVE THE SECRET ACCESS KEY value" which is displayed on .json file which you have 
                downloaded above then click on "Add secret"
+        -> Do some changes in the code then push the code to github then CI/CD will be build with docker image then this docker image
+           will be pushed to ECR Refresh the ECR page then we can see the docker image build id.
+    -> open the tast_definition.json and give your "ID"(Which is displayed on AWS account top right) under "executionRoleArn"
+    -> In task_defition.json give "URI" under "image"
 
 3. Configure "ECS"
+    -> Search for ECS then click on that
+    -> Go to "Clusters" on top left then click on the "Create Cluster"
+    -> Go to "aws.yaml" file and take out the "ECS_CLUSTER" name and give this name in ECS
+    -> select the "AWS FARGATE(serverless)"
+    -> click on "Create"
+    -> click on the "Task definitions" which is displayed on top left 
+    -> select the "Create new task definition with JSON" then copy the "task_defition.json" code and paste in AWS.
+    -> click on "Create"
 4. Configure "AWS SECRET MANAGER"
+    -> search for "Secret manager"
+    -> click on "Store a new secret"
+    -> select the "other type of secret"
+    -> Give the GROQ_API_KEY and GOOGLE_API_KEY under "key/value pairs"
+    -> click on "Next"
+    -> give "name" then click on Next again click on Next
+    -> Finally click on "store"
 ################################################
 
 
