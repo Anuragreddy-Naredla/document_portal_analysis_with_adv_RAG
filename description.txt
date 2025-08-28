@@ -155,6 +155,7 @@ TO TEST THE UI FROM VSCODE:
     -> Goto JSON tab then write the text which was mentioned in incline_policy.json
     -> Give the name then click on Next then click on "Create Policy"
 9. ADD the security groups from EC2.
+10. copy your secret manager key and update in task_def.json file under Secrets=>Valuefrom
 #AmazonECSTaskExecutionRolePolicy
 
 ################################################
@@ -163,7 +164,7 @@ TO TEST THE UI FROM VSCODE:
 2. got to tasks then click on recent task.
 3. under the "configuration" go to "Public IP"
 4. click on "Open address" then write the port as 8080
-    -> 3.104.78.140:8080
+    -> http://3.26.78.184:8080/
 
 
 
