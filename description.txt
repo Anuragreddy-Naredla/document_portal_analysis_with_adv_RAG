@@ -155,6 +155,7 @@ TO TEST THE UI FROM VSCODE:
     -> Goto JSON tab then write the text which was mentioned in incline_policy.json
     -> Give the name then click on Next then click on "Create Policy"
 9. ADD the security groups from EC2.
+#AmazonECSTaskExecutionRolePolicy
 
 ################################################
 ##########ACCESSING THE APPLICATION ############
