@@ -157,6 +157,7 @@ TO TEST THE UI FROM VSCODE:
 9. ADD the security groups from EC2.
 10. copy your secret manager key and update in task_def.json file under Secrets=>Valuefrom
 #AmazonECSTaskExecutionRolePolicy
+11. After Completing entire project delete entire services of ECR and ECS
 
 ################################################
 ##########ACCESSING THE APPLICATION ############
