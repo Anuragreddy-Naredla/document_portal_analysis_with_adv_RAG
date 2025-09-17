@@ -36,18 +36,20 @@ The application provides four core services for document management:
 ## Installation
 
 1. **Clone the repository**:
+
    git clone https://github.com/Anuragreddy-Naredla/document_portal_analysis_with_adv_RAG.git
 
 2. **Create the virtual environment**:
+
     conda create -p env python=3.10 -y
 
 3. **Activate the virtual environment**:
+
     conda activate env
 
 4. **Install the required dependencies**:
-    pip install -r requirements.txt
 
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 **Generate API Keys**
 
