@@ -154,8 +154,8 @@ def test_compare_happy_path(monkeypatch):
         def compare_documents(self, text):
             return FakeDf()
 
-    monkeypatch.setattr(app,"api.main.DocCompare", FakeComparator)
-    monkeypatch.setattr(app,"api.main.DocumentComparatorLLM", FakeLLMComparator)
+    monkeypatch.setattr("api.main.DocCompare", FakeComparator)
+    monkeypatch.setattr("api.main.DocumentComparatorLLM", FakeLLMComparator)
 
     ref = io.BytesIO(b"a")
     act = io.BytesIO(b"b")
