@@ -8,7 +8,7 @@ import builtins
 import pytest
 from langchain_core.documents import Document
 
-from src.document_ingestion.data_ingestion import FaissManager, ChatIngestor, DocHandler, DocumentComparator
+from src.document_ingestion.data_ingestion import FaissManager, ChatIngestor, DocHandler, DocCompare
 
 
 def test_faissmanager_no_data_raises(tmp_path, monkeypatch):
@@ -194,7 +194,7 @@ def test_dochandler_read_pdf_failure(tmp_path):
 
 
 def test_document_comparator_save_and_combine(tmp_path, monkeypatch):
-    dc = DocumentComparator(base_dir=str(tmp_path))
+    dc = DocCompare(base_dir=str(tmp_path))
 
     class F:
         def __init__(self, name, data):
@@ -216,12 +216,12 @@ def test_document_comparator_save_and_combine(tmp_path, monkeypatch):
     # Read routes through DocHandler for non-PDF
     from src.document_ingestion.data_ingestion import DocHandler as DH
     monkeypatch.setattr(DH, "read_text", lambda self, p: "CONTENT")
-    combined = dc.combine_documents()
+    combined = dc.combine_docs()
     assert "Document: r.txt" in combined and "Document: a.txt" in combined
 
 
 def test_document_comparator_read_pdf_error(tmp_path):
-    dc = DocumentComparator(base_dir=str(tmp_path))
+    dc = DocCompare(base_dir=str(tmp_path))
     bad = Path(dc.session_path) / "bad.pdf"
     bad.write_bytes(b"not a pdf")
     with pytest.raises(Exception):

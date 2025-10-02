@@ -19,7 +19,7 @@ from deepeval import evaluate
 
 from logger import GLOBAL_LOGGER as log
 
-from src.document_ingestion.mm_ingestion import MultiModalChatIngestor
+from src.document_ingestion.data_ingestion import MultiModalChatIngestor
 from src.document_chat.multimodal.indexer import (
     load_multimodal_handles,
     build_mm_eval_context,

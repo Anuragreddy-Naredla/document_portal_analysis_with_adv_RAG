@@ -3,7 +3,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from api.main import app   # or your FastAPI entrypoint
-from model.models import Metadata
+from model.models import MetaData
 from exception.custom_exception import DocumentPortalException
 from src.document_analyzer.data_analysis import DocumentAnalyzer
 from langchain_core.output_parsers import JsonOutputParser
@@ -101,6 +101,6 @@ def test_analyze_document_happy_path_returns_dict(monkeypatch):
 
     assert isinstance(result, dict)
     # Validate shape by parsing with the Pydantic model
-    parsed = Metadata(**result)
+    parsed = MetaData(**result)
     assert parsed.Title == "Sample Doc"
     assert isinstance(parsed.Summary, list)
