@@ -1,7 +1,7 @@
 1. create virtual environment.
 
     -> conda create -p env python=3.10 -y
-    -> conda activate env
+    -> conda activate env/
     -> To check type "pip list"
 
 2. Create the github and commit the files.

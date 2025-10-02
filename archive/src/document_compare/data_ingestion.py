@@ -3,19 +3,19 @@ from pathlib import Path
 import fitz
 import uuid
 from datetime import datetime, timezone
-from logger.custom_logger import CustomLogger
+from logger import GLOBAL_LOGGER as log
+
 from exception.custom_exception import DocumentPortalException
 
 class DocumentIngestion:
 
     def __init__(self, base_dir: str = "data\\document_compare",session_id=None):
-        self.log = CustomLogger().get_logger(__name__)
         self.base_dir = Path(base_dir)
         self.session_id = session_id or f"session_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         self.session_path = self.base_dir / self.session_id
         self.session_path.mkdir(parents=True, exist_ok=True)
 
-        self.log.info("DocumentComparator initialized", session_path=str(self.session_path))
+        log.info("DocumentComparator initialized", session_path=str(self.session_path))
 
     def save_uploaded_files(self, reference_file, actual_file):
         """
@@ -34,11 +34,11 @@ class DocumentIngestion:
             with open(act_path, "wb") as f:
                 f.write(actual_file.getbuffer())
 
-            self.log.info("Files saved", reference=str(ref_path), actual=str(act_path), session=self.session_id)
+            log.info("Files saved", reference=str(ref_path), actual=str(act_path), session=self.session_id)
             return ref_path, act_path
 
         except Exception as e:
-            self.log.error("Error saving PDF files", error=str(e), session=self.session_id)
+            log.error("Error saving PDF files", error=str(e), session=self.session_id)
             raise DocumentPortalException("Error saving files", sys)
 
     def read_pdf(self, pdf_path: Path) -> str:
@@ -57,11 +57,11 @@ class DocumentIngestion:
                     if text.strip():
                         all_text.append(f"\n --- Page {page_num + 1} --- \n{text}")
 
-            self.log.info("PDF read successfully", file=str(pdf_path), pages=len(all_text))
+            log.info("PDF read successfully", file=str(pdf_path), pages=len(all_text))
             return "\n".join(all_text)
 
         except Exception as e:
-            self.log.error("Error reading PDF", file=str(pdf_path), error=str(e))
+            log.error("Error reading PDF", file=str(pdf_path), error=str(e))
             raise DocumentPortalException("Error reading PDF", sys)
 
     def combine_documents(self) -> str:
@@ -76,11 +76,11 @@ class DocumentIngestion:
                     doc_parts.append(f"Document: {file.name}\n{content}")
 
             combined_text = "\n\n".join(doc_parts)
-            self.log.info("Documents combined", count=len(doc_parts), session=self.session_id)
+            log.info("Documents combined", count=len(doc_parts), session=self.session_id)
             return combined_text
 
         except Exception as e:
-            self.log.error("Error combining documents", error=str(e), session=self.session_id)
+            log.error("Error combining documents", error=str(e), session=self.session_id)
             raise DocumentPortalException("Error combining documents", sys)
 
     def clean_old_sessions(self, keep_latest: int = 3):
@@ -96,8 +96,8 @@ class DocumentIngestion:
                 for file in folder.iterdir():
                     file.unlink()
                 folder.rmdir()
-                self.log.info("Old session folder deleted", path=str(folder))
+                log.info("Old session folder deleted", path=str(folder))
 
         except Exception as e:
-            self.log.error("Error cleaning old sessions", error=str(e))
+            log.error("Error cleaning old sessions", error=str(e))
             raise DocumentPortalException("Error cleaning old sessions", sys)

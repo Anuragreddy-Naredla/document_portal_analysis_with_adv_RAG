@@ -8,12 +8,11 @@ from model.models import MetaData
 
 from langchain_core.output_parsers import JsonOutputParser
 from langchain.output_parsers import OutputFixingParser # type: ignore
-
+from logger import GLOBAL_LOGGER as log
 
 class DocumentAnalyzer:
 
     def __init__(self):
-        self.log=CustomLogger().get_logger(__name__)
         try:
             self.loader=ModelLoader()
             self.llm=self.loader.load_llm()
@@ -23,16 +22,16 @@ class DocumentAnalyzer:
 
             self.prompt = PROMPT_REGISTRY["document_analysis"]
 
-            self.log.info("DocumentAnalyzer initialized successfully")
+            log.info("DocumentAnalyzer initialized successfully")
         except Exception as e:
-            self.log.error(f"Error initializing DocumentAnalyzer:{e}")
+            log.error(f"Error initializing DocumentAnalyzer:{e}")
             raise DocumentPortalException("Error in DocumentAnalyzer Initialization", sys)
 
     def analyze_document(self, document_text:str):
         try:
             chain = self.prompt | self.llm | self.fixing_parser
             
-            self.log.info("Meta-data analysis chain initialized")
+            log.info("Meta-data analysis chain initialized")
             print("#################################################################")
             print("doc_text::::::!!!!!!!!!!!!!", len(document_text))
             response = chain.invoke({
@@ -40,12 +39,12 @@ class DocumentAnalyzer:
                 "document_text": document_text
             })
 
-            self.log.info("Metadata extraction successful", keys=list(response.keys()))
+            log.info("Metadata extraction successful", keys=list(response.keys()))
             
             return response
 
         except Exception as e:
-            self.log.error("Metadata analysis failed", error=str(e))
+            log.error("Metadata analysis failed", error=str(e))
             raise DocumentPortalException("Metadata extraction failed",sys)
     
 # da=DocumentAnalyzer()
