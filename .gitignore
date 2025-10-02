@@ -8,3 +8,4 @@ logs/
 data/
 faiss_index/
 faisss_index/
+users.db
