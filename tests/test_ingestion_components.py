@@ -131,7 +131,7 @@ def test_chatingestor_happy_path(tmp_path, monkeypatch):
 
     monkeypatch.setattr("src.document_ingestion.data_ingestion.FaissManager", FakeFM)
 
-    retriever = ing.built_retriver([io.BytesIO(b"data")], chunk_size=50, chunk_overlap=5, k=7)
+    retriever = ing.built_retriever([io.BytesIO(b"data")], chunk_size=50, chunk_overlap=5, k=7)
     assert isinstance(retriever, object)
     assert retriever.search_kwargs.get("k") == 7
 

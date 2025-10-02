@@ -84,7 +84,7 @@ def main():
     # Ingest and index
     chat_ingestor = ChatIngestor(temp_base=UPLOAD_BASE, faiss_base=FAISS_BASE)
     adapters = [LocalFileAdapter(str(p)) for p in paths]
-    chat_ingestor.built_retriver(adapters)
+    chat_ingestor.built_retriever(adapters)
     log.info("Ingestion complete", session_id=chat_ingestor.session_id)
 
     # 2) Pull dataset from Confident AI
