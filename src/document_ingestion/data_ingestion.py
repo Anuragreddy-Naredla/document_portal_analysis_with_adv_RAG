@@ -455,7 +455,11 @@ class ChatIngestor:
         log.info("Documents split", chunks=len(chunks), chunk_size=chunk_size, overlap=chunk_overlap)
         return chunks
 
-    def built_retriever(self,uploaded_files: Iterable, chunk_size, chunk_overlap, k):
+    def built_retriever(self,uploaded_files: Iterable,
+        *,
+        chunk_size: int = 1000,
+        chunk_overlap: int = 200,
+        k: int = 5,):
         try:
             paths = save_uploaded_files(uploaded_files, self.temp_dir)
             docs = load_documents(paths)

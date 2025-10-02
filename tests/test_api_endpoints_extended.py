@@ -163,6 +163,7 @@ def test_compare_happy_path(monkeypatch):
         "reference": ("ref.pdf", ref, "application/pdf"),
         "actual": ("act.pdf", act, "application/pdf"),
     }
+    print("filesfilesfiles", files)
     resp = client.post("/compare", files=files)
     assert resp.status_code == 200
     js = resp.json()
