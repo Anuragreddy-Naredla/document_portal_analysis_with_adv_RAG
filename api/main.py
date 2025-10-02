@@ -207,7 +207,7 @@ async def chat_build_index(
                 use_session_dirs=use_session_dirs,
                 session_id=session_id or None,
             )
-            ci.built_retriver(wrapped, chunk_size=chunk_size, chunk_overlap=chunk_overlap, k=k)
+            ci.built_retriever(wrapped, chunk_size=chunk_size, chunk_overlap=chunk_overlap, k=k)
             log.info(f"Index created successfully for session: {ci.session_id}")
             return {"session_id": ci.session_id, "k": k, "use_session_dirs": use_session_dirs, "multimodal": False}
     except HTTPException:

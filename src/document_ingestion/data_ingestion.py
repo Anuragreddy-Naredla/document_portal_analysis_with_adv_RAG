@@ -333,7 +333,7 @@ class DocHandler:
             raise DocumentPortalException(f"Could not process PDF: {pdf_path}", e) from e
 
 class DocCompare:
-
+    ALLOWED_EXTS = {".pdf", ".docx", ".pptx", ".md", ".txt", ".xlsx", ".xls", ".csv", ".db", ".sqlite", ".sqlite3"}
     def __init__(self,base_dir: str = "data/document_compare", session_id: Optional[str] = None):
         self.base_dir = Path(base_dir)
         self.session_id = session_id or _session_id()
