@@ -165,6 +165,7 @@ def test_compare_happy_path(monkeypatch):
     }
     print("filesfilesfiles", files)
     resp = client.post("/compare", files=files)
+    print("resppp::::", resp)
     assert resp.status_code == 200
     js = resp.json()
     assert js.get("session_id") == "sess-1"
