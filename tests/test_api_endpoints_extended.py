@@ -3,7 +3,7 @@ import os
 from fastapi.testclient import TestClient
 
 from api.main import app
-
+import api.main as main
 
 client = TestClient(app,raise_server_exceptions=True)
 
@@ -142,20 +142,17 @@ def test_compare_happy_path(monkeypatch):
         def save_uploaded_files(self, ref, act):
             return ("/tmp/ref.pdf", "/tmp/act.pdf")
         def combine_documents(self):
-            return "combined"
+            return "/tmp/combined.pdf"
 
-    class FakeDf:
-        def to_dict(self, orient="records"):
-            return [{"a": 1}]
 
     class FakeLLMComparator:
         def __init__(self, *args, **kwargs):
             pass
         def compare_documents(self, text):
-            return FakeDf()
+            return [{"a": 1}]
 
-    monkeypatch.setattr("api.main.DocCompare", FakeComparator)
-    monkeypatch.setattr("api.main.DocumentComparatorLLM", FakeLLMComparator)
+    monkeypatch.setattr(main,"DocCompare", FakeComparator)
+    monkeypatch.setattr(main,"DocumentComparatorLLM", FakeLLMComparator)
 
     ref = io.BytesIO(b"a")
     act = io.BytesIO(b"b")
