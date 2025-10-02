@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 from api.main import app
 
 
-client = TestClient(app)
+client = TestClient(app,raise_server_exceptions=True)
 
 
 def test_health_ok():
@@ -154,8 +154,8 @@ def test_compare_happy_path(monkeypatch):
         def compare_documents(self, text):
             return FakeDf()
 
-    monkeypatch.setattr("api.main.DocCompare", FakeComparator)
-    monkeypatch.setattr("api.main.DocumentComparatorLLM", FakeLLMComparator)
+    monkeypatch.setattr(app,"api.main.DocCompare", FakeComparator)
+    monkeypatch.setattr(app,"api.main.DocumentComparatorLLM", FakeLLMComparator)
 
     ref = io.BytesIO(b"a")
     act = io.BytesIO(b"b")
