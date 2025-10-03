@@ -154,7 +154,11 @@ TO TEST THE UI FROM VSCODE:
 8. After executing also you can't see this role goto "Users"->click on created user=>under "Add permissions"=>Click on "create incline policy"
     -> Goto JSON tab then write the text which was mentioned in incline_policy.json
     -> Give the name then click on Next then click on "Create Policy"
+    -> Add your secret ARN in the inline policies for AllowSecretsAccess and SecretsManagerRead under "Resource"
 9. ADD the security groups from EC2.
+10. Craete service ECS
+    * Go to Clusters=> Create service or Create
+    * Give name as "document-portal-service" which we have mention in aws.yml under "ECS_SERVICE"
 10. copy your secret manager key and update in task_def.json file under Secrets=>Valuefrom
 #AmazonECSTaskExecutionRolePolicy
 11. After Completing entire project delete entire services of ECR and ECS
