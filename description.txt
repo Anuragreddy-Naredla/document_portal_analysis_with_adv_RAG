@@ -156,12 +156,17 @@ TO TEST THE UI FROM VSCODE:
     -> Give the name then click on Next then click on "Create Policy"
     -> Add your secret ARN in the inline policies for AllowSecretsAccess and SecretsManagerRead under "Resource"
 9. ADD the security groups from EC2.
-10. Craete service ECS
+10. Create service ECS
     * Go to Clusters=> Create service or Create
     * Give name as "document-portal-service" which we have mention in aws.yml under "ECS_SERVICE"
-10. copy your secret manager key and update in task_def.json file under Secrets=>Valuefrom
+11. copy your secret manager key and update in task_def.json file under Secrets=>Valuefrom
+12. Create the Role ecsTaskExecutionRole
+    a. Goto IAM=>Roles=>Create role
+    b. select AWS Service and select the Elastic Container Service=> Elastic Conatiner Service Task=> Next button
+    c. Select the AmazonECSTaskExecutionRolePolicy=> Click on Next button
+    d. Give the name as ecsTaskExecutionRole which was mention in task_definition.json file
 #AmazonECSTaskExecutionRolePolicy
-11. After Completing entire project delete entire services of ECR and ECS
+12. After Completing entire project delete entire services of ECR and ECS
 
 ################################################
 ##########ACCESSING THE APPLICATION ############
