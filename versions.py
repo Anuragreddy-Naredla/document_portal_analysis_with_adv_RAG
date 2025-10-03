@@ -16,7 +16,21 @@ packages = [
     "fastapi",
     "uvicorn",
     "python-multipart",
-    "docx2txt"
+    "docx2txt",
+    "cfn-lint",
+    "pre-commit",
+    "deepeval",
+    "openai",
+    "unstructured",
+    "pillow",
+    "opencv-python-headless",
+    "pytesseract",
+    "fastapi-users[sqlalchemy]",
+    "fastapi-users-db-sqlalchemy",
+    "sqlalchemy>=2",
+    "aiosqlite",
+    "passlib[bcrypt]",
+    "pyjwt",
 ]
 for pkg in packages:
     try:
