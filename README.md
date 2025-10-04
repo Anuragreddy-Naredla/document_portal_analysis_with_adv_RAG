@@ -7,6 +7,7 @@ In a company, when purchasing products from a third-party vendor, the vendor oft
 ### Features
 
 a. Created login/signup credentials.
+
 b. The services below will only appear if the user provides valid login credentials..
 
 The application provides four core services for document management:
@@ -83,6 +84,7 @@ The application provides four core services for document management:
         GOOGLE_API_KEY="YOUR_API_KEY_HERE"
 
 **Deployment Steps**
+
 **Configure AWS Services**
 
 1. **Configure ECR (Elastic Container Registry):**
@@ -184,7 +186,7 @@ The application provides four core services for document management:
     4. Open a browser and navigate to http://<Public_IP>:8080.
 
 **Cleanup**
- * After completing the project, delete the AWS services (ECR, ECS) to avoid ongoing charges.
+ * **After completing the project, delete the AWS services (ECR, ECS) to avoid ongoing charges.**
 
 
  **Steps to Create a Docker Image Locally in Docker Desktop App:**
@@ -238,8 +240,8 @@ The application provides four core services for document management:
         3. task_definition.json
 
     **What the aws.yaml File Does**
-        **CI/CD Pipeline: CI/CD to ECS Fargate**
-        **Workflow Overview:**
+        * **CI/CD Pipeline: CI/CD to ECS Fargate**
+        * **Workflow Overview:**
             **1. Trigger:**
                 * The pipeline is triggered when the **"Run Unit Tests"** workflow completes successfully on the **master branch.**.
             **2. Build & Push Docker Image:**
