@@ -205,31 +205,33 @@ The application provides four core services for document management:
 
 **2. List all Docker images:**
 
-    * To view all the images you have built on Docker, run:
-        * docker images
+* To view all the images you have built on Docker, run:
+
+    * docker images
 
 **3. Run the Docker container:**
 
-    * Start the container with the following command:
+* Start the container with the following command:
 
-        * docker run -d -p 8093:8080 --name doc-portal-app document-portal-system-with-rag
+    * docker run -d -p 8093:8080 --name doc-portal-app document-portal-system-with-rag
 
-            * -d: Runs the container in detached mode, meaning it will run in the background.
+        * -d: Runs the container in detached mode, meaning it will run in the background.
 
-            * -p: Publish the container’s port.
+        * -p: Publish the container’s port.
 
-            * 8093: The port on your local system.
+        * 8093: The port on your local system.
 
-            * 8080: The port inside the container.
+        * 8080: The port inside the container.
 
-            * --name doc-portal-app: This is the name of your container.
+        * --name doc-portal-app: This is the name of your container.
 
-            * document-portal-system-with-rag: The image name to create the container from.
+        * document-portal-system-with-rag: The image name to create the container from.
 
 **4. Check the app in the browser:**
 
-    * To verify that the container is running, open a browser and navigate to:
-        * http://localhost:8093/
+* To verify that the container is running, open a browser and navigate to:
+
+    * http://localhost:8093/
 
 
 * **.github/workflows Overview**
@@ -315,7 +317,7 @@ The application provides four core services for document management:
 
        **CI Workflow: Run Unit Tests**
 
-            * The CI workflow (ci.yml) automates the process of running unit tests using GitHub Actions. It ensures that all code changes are tested before merging or pushing to the repository.
+        * The CI workflow (ci.yml) automates the process of running unit tests using GitHub Actions. It ensures that all code changes are tested before merging or pushing to the repository.
 
        **Workflow Overview:**
 
@@ -341,39 +343,39 @@ The application provides four core services for document management:
 
        **Purpose:**
 
-            * This workflow ensures that all tests pass automatically whenever new changes are pushed to the repository or a pull request is made. This helps maintain code quality and catch issues early in the development process.
+        * This workflow ensures that all tests pass automatically whenever new changes are pushed to the repository or a pull request is made. This helps maintain code quality and catch issues early in the development process.
     
     * **What the task_definition.json File Does**
 
         **ECS Task Definition: documentportaltd**
 
-            * This ECS Task Definition is used to run a containerized application on Amazon ECS Fargate.
+        * This ECS Task Definition is used to run a containerized application on Amazon ECS Fargate.
 
         **Key Components:**
 
-            * 1. Family:
+        * 1. Family:
 
-                * The task is part of the documentportaltd family, which is used for organizing task definitions.
+            * The task is part of the documentportaltd family, which is used for organizing task definitions.
 
-            * 2.Network Mode:
+        * 2.Network Mode:
 
-                * The task uses the awsvpc network mode, which means each task gets its own ENI (Elastic Network Interface) and IP address.
+            * The task uses the awsvpc network mode, which means each task gets its own ENI (Elastic Network Interface) and IP address.
 
-            * 3. Execution Role:
+        * 3. Execution Role:
 
-                * The task uses an IAM role (ecsTaskExecutionRole) to interact with other AWS services such as ECR, CloudWatch Logs, and Secrets Manager.
+            * The task uses an IAM role (ecsTaskExecutionRole) to interact with other AWS services such as ECR, CloudWatch Logs, and Secrets Manager.
 
-            * 4. Compatibilities:
+        * 4. Compatibilities:
 
-                * The task is compatible with FARGATE, meaning it will run on AWS Fargate (serverless compute).
+            * The task is compatible with FARGATE, meaning it will run on AWS Fargate (serverless compute).
 
-            * 5. Resources:
+        * 5. Resources:
 
-                * CPU: 1024 CPU units (1 vCPU).
+            * CPU: 1024 CPU units (1 vCPU).
 
-                * Memory: 8192 MiB (8 GB) of RAM allocated for the task.
+            * Memory: 8192 MiB (8 GB) of RAM allocated for the task.
 
-            * 6. Container Definitions:
+        * 6. Container Definitions:
 
                 * The container definition specifies a single container:
 
@@ -391,11 +393,11 @@ The application provides four core services for document management:
 
         **Summary of Functionality:**
 
-            * The ECS task definition runs a Docker container on Fargate using an image stored in Amazon ECR.
+        * The ECS task definition runs a Docker container on Fargate using an image stored in Amazon ECR.
 
-            * The task is configured for a production environment and utilizes AWS Secrets Manager to securely manage sensitive API keys.
-            
-            * It is configured to expose HTTP traffic on port 8080 and send application logs to CloudWatch for monitoring.
+        * The task is configured for a production environment and utilizes AWS Secrets Manager to securely manage sensitive API keys.
+
+        * It is configured to expose HTTP traffic on port 8080 and send application logs to CloudWatch for monitoring.
 
 
     
