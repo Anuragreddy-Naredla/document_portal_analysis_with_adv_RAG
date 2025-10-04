@@ -174,3 +174,9 @@ The application provides four core services for document management:
 
 **Cleanup**
  * After completing the project, delete the AWS services (ECR, ECS) to avoid ongoing charges.
+
+ ![alt text](doc_analysis.PNG)
+
+ ![alt text](doc_chat.PNG)
+
+![alt text](doc_compare.PNG)
