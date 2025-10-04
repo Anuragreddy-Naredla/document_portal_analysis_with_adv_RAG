@@ -235,13 +235,16 @@ The application provides four core services for document management:
 * **.github/workflows Overview**
 
     The .github/workflows folder contains the following three files:
+
         1. aws.yaml
+
         2. ci.yaml
+
         3. task_definition.json
 
     **What the aws.yaml File Does**
-        * **CI/CD Pipeline: CI/CD to ECS Fargate**
-        * **Workflow Overview:**
+        *   **CI/CD Pipeline: CI/CD to ECS Fargate**
+        *   **Workflow Overview:**
             **1. Trigger:**
                 * The pipeline is triggered when the **"Run Unit Tests"** workflow completes successfully on the **master branch.**.
             **2. Build & Push Docker Image:**
